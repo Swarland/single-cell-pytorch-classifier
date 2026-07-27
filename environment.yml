@@ -1,0 +1,13 @@
+name: singlecell
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - scanpy
+  - ipykernel
+  - jupyter
+  - anndata[version='<0.13']
+  - numpy
+  - pytorch=2.13.0
+prefix: /Users/shanewarland/miniforge3/envs/singlecell
