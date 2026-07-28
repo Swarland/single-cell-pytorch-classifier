@@ -3,6 +3,8 @@ from torch.utils.data import Dataset, DataLoader
 class SingleCellDataset(Dataset):
     """Single Cell Dataset."""
     def __init__(self, X_tensor, y_tensor):
+        if len(X_tensor) != len(y_tensor):
+            raise ValueError('X and Y must have same number of samples')
         self.X = X_tensor
         self.y = y_tensor
 
