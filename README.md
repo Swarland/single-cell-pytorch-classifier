@@ -11,13 +11,13 @@ This pipeline is part of my computational biology/machine learning portfolio
 
 - [x] Create project structure
 - [x] Initialize GitHub repository
-- [ ] Create Python environment
-- [ ] Download dataset
-- [ ] Explore the data
-- [ ] Build a custom PyTorch Dataset
-- [ ] Build a DataLoader
-- [ ] Train a multilayer perceptron (MLP)
-- [ ] Evaluate model performance
+- [x] Create Python environment
+- [x] Download dataset
+- [x] Explore the data
+- [x] Build a custom PyTorch Dataset
+- [x] Build a DataLoader
+- [x] Train a multilayer perceptron (MLP)
+- [x] Evaluate model performance
 - [ ] Experiment with improved architectures
 
 ## Repository Structure
