@@ -3,6 +3,18 @@ import torch.nn as nn
 
 def evaluate(dataloader, model):
 
+    """ Evaluates a trained neural network. 
+   
+    Takes a trained neural network model and evaluates it on given dataset
+    
+    args: 
+        dataloader (dataloder cass): PyTorch dataloader class
+        model (class): PyTorch nn.model class
+    returns:
+        accuracy (float): percentage of correct predictions
+        average_loss (float): the average Cross Entropy Loss. 
+    """
+
     ## Remember if it was training and restore at end
     was_training = model.training
 

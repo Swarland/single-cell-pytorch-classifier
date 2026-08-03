@@ -7,6 +7,22 @@ from src.utils import set_seed
 
 def tune(X_tensor, class_names, train_dataloader, validate_dataloader, num_epochs, num_trials):
 
+    """ Tunes a neural network model using the optuna package. 
+   
+    Takes a neural network model and finds best hyperparameters for specific model used. 
+    
+    args:
+        X_tensor (tensor): original tensor used for data creation. Number of features in data derived from it.
+        class_names (list): list of class names in dataset. Number of classes derived from it.
+        train_dataloader (dataloder cass): PyTorch dataloader class containing training data
+        validate_dataloader (dataloder cass): PyTorch dataloader class containing  validation data
+        num_epochs (integer): number of epoch to train
+        num_trials (integer): number of trials to test hyperparameters in
+
+    returns:
+        optuna study
+    """
+
     def objective(trial):
         set_seed(42)
         ## Define hyperparameter space
@@ -28,7 +44,7 @@ def tune(X_tensor, class_names, train_dataloader, validate_dataloader, num_epoch
         ## Train model
         train(train_dataloader, model, num_epochs = num_epochs, lr = lr, weight_decay = weight_decay)
 
-        accuracy, average_loss = evaluate(validate_dataloader, model)
+        _ , average_loss = evaluate(validate_dataloader, model)
 
         return average_loss
 

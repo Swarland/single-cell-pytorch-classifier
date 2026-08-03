@@ -1,8 +1,31 @@
 import torch
+import copy
 import torch.nn as nn
 from src.evaluate import evaluate
 
-def train(dataloader, model, num_epochs, lr = 0.001, weight_decay = 0, validation_dataloader = None):
+def train(dataloader, model, num_epochs, lr = 0.001, weight_decay = 0, validation_dataloader = None, 
+patience = None, min_delta = 0.0):
+
+    """ Trains a neural network model. 
+   
+    Takes a neural network model and trains it. Has two additional tunable parameters. 
+    
+    args: 
+        dataloader (dataloder cass): PyTorch dataloader class
+        model (class): PyTorch nn.model class
+        num_epochs (integer): number of epoch to train
+        lr (float): the learning rate of the model
+        weight_decay (float): decay rate of adam optimizer
+        validation_dataloader (dataloder cass):  If optional validation_dataloader 
+                                                 is included the function returns validation loss.
+        patience (integer): how many epoch model goes without drecrease in loss
+        min_delta (float): amount by which loss must decrease to be considered sequential improvement
+
+    returns:
+        trained model
+        history: dictionary containing train loss per epoch and 
+                 validation loss per epoch (if validation_dataloader is not None)
+    """
 
     ## Set model to train
     model.train()
@@ -12,6 +35,11 @@ def train(dataloader, model, num_epochs, lr = 0.001, weight_decay = 0, validatio
         "train_loss": [],
         "validation_loss": [],
     }
+
+    best_validation_loss = float("inf")
+    best_model_state = None
+    epochs_without_improvement = 0
+
     ## Define loss function
     criterion = nn.CrossEntropyLoss()
 
@@ -21,7 +49,7 @@ def train(dataloader, model, num_epochs, lr = 0.001, weight_decay = 0, validatio
     ## Define training loop
     for epoch in range(num_epochs):
         model.train()
-        
+
         total_train_loss = 0
 
         for inputs, targets in dataloader:
@@ -50,21 +78,38 @@ def train(dataloader, model, num_epochs, lr = 0.001, weight_decay = 0, validatio
         history["train_loss"].append(average_train_loss)
         
 
-        
-
         ## If validation dataloader is inputed function then calls evaluation function
         if validation_dataloader is not None:
             _ , validation_loss = evaluate(validation_dataloader, model)
             history["validation_loss"].append(validation_loss)
 
-        if validation_dataloader is not None:
             print(
                 f"Epoch {epoch+1}/{num_epochs} complete.", 
                 f"Train loss: {average_train_loss:.4f}",
                 f"Validation loss: {validation_loss:.4f}")
+
+            improved = validation_loss < (best_validation_loss - min_delta)
+
+            if improved:
+                best_validation_loss = validation_loss
+                best_model_state = copy.deepcopy(
+                    model.state_dict()
+                )
+                epochs_without_improvement = 0
+            else:
+                epochs_without_improvement += 1
+
+            if (patience is not None and epochs_without_improvement >= patience):
+                print("Early stopping triggered at ",
+                f"epoch {epoch + 1}.")
+                break
+            
         else:
             print(
                 f"Epoch {epoch+1}/{num_epochs} complete.", 
                 f"Train loss: {average_train_loss:.4f}")
+
+        if best_model_state is not None:
+            model.load_state_dict(best_model_state)
     ## Return both training loss and the model
     return model, history

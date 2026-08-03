@@ -24,3 +24,6 @@
 
 ## August 2nd 
 - Finishing touches than push to github. 
+
+## August 3rd
+- Integrated stop function to the traning loop.
