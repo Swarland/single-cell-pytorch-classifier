@@ -14,4 +14,13 @@
 ## July 27th 
 - Trained and evaluated model
 - Standardized project so that components are stored in sepparate .py files
-- Began hyperpareter tuning
+- Began hyperparameter tuning
+
+## July 28th 
+- Clean up the flow of the project so that it is more readabler
+
+## July 30th 
+- Edited and improved train function to include optional validation loss calculation
+
+## August 2nd 
+- Finishing touches than push to github. 

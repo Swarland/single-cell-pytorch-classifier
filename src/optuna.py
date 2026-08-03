@@ -5,7 +5,7 @@ from src.evaluate import evaluate
 from src.model import SingleCellModel
 from src.utils import set_seed
 
-def tune(X_tensor, label_encoder, train_dataloader, validate_dataloader, num_epochs, num_trials):
+def tune(X_tensor, class_names, train_dataloader, validate_dataloader, num_epochs, num_trials):
 
     def objective(trial):
         set_seed(42)
@@ -20,7 +20,7 @@ def tune(X_tensor, label_encoder, train_dataloader, validate_dataloader, num_epo
         ## Call model 
         model = SingleCellModel(
         num_features=X_tensor.shape[1],
-        num_classes=len(label_encoder.classes_),
+        num_classes=len(class_names),
         hidden_size1 = hidden_size1, 
         hidden_size2 = hidden_size2,
         dropout_rate = dropout_rate)

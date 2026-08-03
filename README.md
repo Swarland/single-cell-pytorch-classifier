@@ -1,24 +1,19 @@
-# single-cell-pytorch-classifier
+## single-cell-pytorch-classifier
 A PyTorch project for classifying cell types from single-cell RNA-seq data.
 
-## Project Roadmap
+## Data
 
-Build a deep learning pipeline in pytorch to classify cell types from single-cell RNA-seq data
+700 cells
+765 genes
+10 cell types
 
-This pipeline is part of my computational biology/machine learning portfolio
+## Results
 
-## Planned Roadmap
+Test accuracy: 82.9%
 
-- [x] Create project structure
-- [x] Initialize GitHub repository
-- [x] Create Python environment
-- [x] Download dataset
-- [x] Explore the data
-- [x] Build a custom PyTorch Dataset
-- [x] Build a DataLoader
-- [x] Train a multilayer perceptron (MLP)
-- [x] Evaluate model performance
-- [ ] Experiment with improved architectures
+Confusion matrix
+Training curves
+Classification report
 
 ## Repository Structure
 
@@ -27,10 +22,13 @@ src/
 - model.py
 - train.py
 - evaluate.py
+- optuna.py
 - utils.py
 
 notebooks/
-- exploratory notebooks
+- 01_explore_data.ipynb
+- 02_train_model.ipynb
+- 03_final_evaluation.ipynb
 
 data/
 - raw datasets

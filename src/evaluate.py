@@ -3,6 +3,9 @@ import torch.nn as nn
 
 def evaluate(dataloader, model):
 
+    ## Remember if it was training and restore at end
+    was_training = model.training
+
     ## Set model to evaluate
     model.eval()
 
@@ -32,4 +35,9 @@ def evaluate(dataloader, model):
             total_samples += targets.size(0)
     average_loss = total_loss / total_samples
     accuracy = correct_predictions / total_samples
+
+    ## If model was previously training, resore to that state
+    if was_training:
+        model.train()
+
     return(accuracy, average_loss)
